@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="java," />
 
 
 
@@ -90,17 +90,17 @@
 
 
 
-<meta name="description" content="File类使用递归查看文件夹中的文件和文件夹1234567891011121314151617181920212223242526272829303132333435363738394041424344import java.io.*;/**递归查看文件*/public class FileTest&amp;#123;	public static void main(String[] args)&amp;#123">
-<meta name="keywords">
+<meta name="description" content="File类使用递归查看文件夹中的文件和文件夹">
+<meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java小示例04">
 <meta property="og:url" content="http://yoursite.com/2017/05/06/Java小示例04/index.html">
 <meta property="og:site_name" content="大道至简">
-<meta property="og:description" content="File类使用递归查看文件夹中的文件和文件夹1234567891011121314151617181920212223242526272829303132333435363738394041424344import java.io.*;/**递归查看文件*/public class FileTest&amp;#123;	public static void main(String[] args)&amp;#123">
-<meta property="og:updated_time" content="2017-05-06T11:36:21.314Z">
+<meta property="og:description" content="File类使用递归查看文件夹中的文件和文件夹">
+<meta property="og:updated_time" content="2017-05-06T11:58:05.283Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java小示例04">
-<meta name="twitter:description" content="File类使用递归查看文件夹中的文件和文件夹1234567891011121314151617181920212223242526272829303132333435363738394041424344import java.io.*;/**递归查看文件*/public class FileTest&amp;#123;	public static void main(String[] args)&amp;#123">
+<meta name="twitter:description" content="File类使用递归查看文件夹中的文件和文件夹">
 
 
 
@@ -324,7 +324,8 @@
       
 
       
-        <h5 id="File类"><a href="#File类" class="headerlink" title="File类"></a>File类</h5><h6 id="使用递归查看文件夹中的文件和文件夹"><a href="#使用递归查看文件夹中的文件和文件夹" class="headerlink" title="使用递归查看文件夹中的文件和文件夹"></a>使用递归查看文件夹中的文件和文件夹</h6><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="comment">/*</span></div><div class="line">*递归查看文件</div><div class="line">*/</div><div class="line"><span class="keyword">public</span> class FileTest&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args)&#123;</div><div class="line">		<span class="comment">/*String separator = File.separator;</span></div><div class="line">		String filename = "myfile.txt";</div><div class="line">		String directory = "mydir1"+separator+"mydir2";</div><div class="line">		File f = new File(directory,filename);</div><div class="line">		if(f.exists())&#123;</div><div class="line">			System.out.println("文件名："+f.getAbsolutePath());</div><div class="line">			System.out.println("文件大小："+f.length());</div><div class="line">		&#125;else&#123;</div><div class="line">			f.getParentFile().mkdirs();</div><div class="line">			try&#123;</div><div class="line">				f.createNewFile();</div><div class="line">			&#125;catch(IOException e)&#123;</div><div class="line">				e.printStackTrace();</div><div class="line">			&#125;</div><div class="line">		&#125;*/</div><div class="line">		</div><div class="line">		<span class="built_in">File</span> f = <span class="keyword">new</span> <span class="built_in">File</span>(<span class="string">"C:/Users/junius/Documents/java"</span>);</div><div class="line">		tree(f);</div><div class="line">				</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> tree(<span class="built_in">File</span> f,<span class="keyword">int</span> level)&#123;</div><div class="line">		<span class="keyword">String</span> perStr = <span class="string">""</span>;</div><div class="line">		<span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;level<span class="number">-1</span>;i++)&#123;</div><div class="line">			perStr +=<span class="string">"    "</span>;</div><div class="line">		&#125;</div><div class="line">		perStr +=<span class="string">"  |-"</span></div><div class="line">		</div><div class="line">		<span class="built_in">File</span>[] childFiles = f.listFiles();</div><div class="line">		<span class="built_in">try</span>&#123;</div><div class="line">			<span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;childFiles.length;i++)&#123;</div><div class="line">				System.out.<span class="built_in">println</span>(childFiles[i].getName());</div><div class="line">				<span class="built_in">if</span>(childFiles[i].<span class="built_in">isDirectory</span>())&#123;</div><div class="line">					tree(childFiles[i]);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="built_in">catch</span>(NullPointerException e)&#123;&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <h5 id="File类"><a href="#File类" class="headerlink" title="File类"></a>File类</h5><h6 id="使用递归查看文件夹中的文件和文件夹"><a href="#使用递归查看文件夹中的文件和文件夹" class="headerlink" title="使用递归查看文件夹中的文件和文件夹"></a>使用递归查看文件夹中的文件和文件夹</h6><a id="more"></a>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="comment">/*</span></div><div class="line">*递归查看文件</div><div class="line">*/</div><div class="line"><span class="keyword">public</span> class FileTest&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args)&#123;</div><div class="line">		<span class="comment">/*String separator = File.separator;</span></div><div class="line">		String filename = "myfile.txt";</div><div class="line">		String directory = "mydir1"+separator+"mydir2";</div><div class="line">		File f = new File(directory,filename);</div><div class="line">		if(f.exists())&#123;</div><div class="line">			System.out.println("文件名："+f.getAbsolutePath());</div><div class="line">			System.out.println("文件大小："+f.length());</div><div class="line">		&#125;else&#123;</div><div class="line">			f.getParentFile().mkdirs();</div><div class="line">			try&#123;</div><div class="line">				f.createNewFile();</div><div class="line">			&#125;catch(IOException e)&#123;</div><div class="line">				e.printStackTrace();</div><div class="line">			&#125;</div><div class="line">		&#125;*/</div><div class="line">		</div><div class="line">		<span class="built_in">File</span> f = <span class="keyword">new</span> <span class="built_in">File</span>(<span class="string">"C:/Users/junius/Documents/java"</span>);</div><div class="line">		tree(f);</div><div class="line">				</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> tree(<span class="built_in">File</span> f,<span class="keyword">int</span> level)&#123;</div><div class="line">		<span class="keyword">String</span> perStr = <span class="string">""</span>;</div><div class="line">		<span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;level<span class="number">-1</span>;i++)&#123;</div><div class="line">			perStr +=<span class="string">"    "</span>;</div><div class="line">		&#125;</div><div class="line">		perStr +=<span class="string">"  |-"</span></div><div class="line">		</div><div class="line">		<span class="built_in">File</span>[] childFiles = f.listFiles();</div><div class="line">		<span class="built_in">try</span>&#123;</div><div class="line">			<span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;childFiles.length;i++)&#123;</div><div class="line">				System.out.<span class="built_in">println</span>(childFiles[i].getName());</div><div class="line">				<span class="built_in">if</span>(childFiles[i].<span class="built_in">isDirectory</span>())&#123;</div><div class="line">					tree(childFiles[i]);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="built_in">catch</span>(NullPointerException e)&#123;&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -350,6 +351,12 @@
     </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
       
 
       
@@ -448,6 +455,15 @@
 
           
 
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
           
 
         </nav>
