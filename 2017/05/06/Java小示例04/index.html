@@ -90,17 +90,17 @@
 
 
 
-<meta name="description" content="Stringsplit方法运用1234567891011121314151617181920212223242526/**将字符串转换成二维double数组*/public class StringDemo2&amp;#123;	public static void main(String[] args) &amp;#123;		double[][] d;		String s=&quot;1,2;3,4,5;6,7,8&quot;;">
+<meta name="description" content="File类使用递归查看文件夹中的文件和文件夹1234567891011121314151617181920212223242526272829303132333435363738394041424344import java.io.*;/**递归查看文件*/public class FileTest&amp;#123;	public static void main(String[] args)&amp;#123">
 <meta name="keywords">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java小示例03">
-<meta property="og:url" content="http://yoursite.com/2017/05/05/Java小示例03/index.html">
+<meta property="og:title" content="Java小示例04">
+<meta property="og:url" content="http://yoursite.com/2017/05/06/Java小示例04/index.html">
 <meta property="og:site_name" content="大道至简">
-<meta property="og:description" content="Stringsplit方法运用1234567891011121314151617181920212223242526/**将字符串转换成二维double数组*/public class StringDemo2&amp;#123;	public static void main(String[] args) &amp;#123;		double[][] d;		String s=&quot;1,2;3,4,5;6,7,8&quot;;">
-<meta property="og:updated_time" content="2017-05-06T08:32:53.773Z">
+<meta property="og:description" content="File类使用递归查看文件夹中的文件和文件夹1234567891011121314151617181920212223242526272829303132333435363738394041424344import java.io.*;/**递归查看文件*/public class FileTest&amp;#123;	public static void main(String[] args)&amp;#123">
+<meta property="og:updated_time" content="2017-05-06T11:36:21.314Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java小示例03">
-<meta name="twitter:description" content="Stringsplit方法运用1234567891011121314151617181920212223242526/**将字符串转换成二维double数组*/public class StringDemo2&amp;#123;	public static void main(String[] args) &amp;#123;		double[][] d;		String s=&quot;1,2;3,4,5;6,7,8&quot;;">
+<meta name="twitter:title" content="Java小示例04">
+<meta name="twitter:description" content="File类使用递归查看文件夹中的文件和文件夹1234567891011121314151617181920212223242526272829303132333435363738394041424344import java.io.*;/**递归查看文件*/public class FileTest&amp;#123;	public static void main(String[] args)&amp;#123">
 
 
 
@@ -128,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/05/Java小示例03/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/06/Java小示例04/"/>
 
 
 
 
 
-  <title>Java小示例03 | 大道至简</title>
+  <title>Java小示例04 | 大道至简</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -253,7 +253,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/05/Java小示例03/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/06/Java小示例04/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="goldmokey">
@@ -274,7 +274,7 @@
             
             
               
-                Java小示例03
+                Java小示例04
               
             
           </h1>
@@ -289,8 +289,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-05T06:53:27+08:00">
-                2017-05-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-06T19:34:43+08:00">
+                2017-05-06
               </time>
             
 
@@ -324,7 +324,7 @@
       
 
       
-        <h5 id="String"><a href="#String" class="headerlink" title="String"></a>String</h5><h6 id="split方法运用"><a href="#split方法运用" class="headerlink" title="split方法运用"></a>split方法运用</h6><figure class="highlight processing"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">*将字符串转换成二维double数组</div><div class="line">*/</div><div class="line"><span class="keyword">public</span> class StringDemo2&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) &#123;</div><div class="line">		<span class="keyword">double</span>[][] d;</div><div class="line">		<span class="keyword">String</span> s=<span class="string">"1,2;3,4,5;6,7,8"</span>;</div><div class="line">		<span class="keyword">String</span>[] sFirst = s.<span class="built_in">split</span>(<span class="string">";"</span>);</div><div class="line">		d = <span class="keyword">new</span> <span class="keyword">double</span>[sFirst.length][];</div><div class="line">		<span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">0</span>;i&lt;sFirst.length;i++)&#123;</div><div class="line">			<span class="keyword">String</span>[] sSecond = sFirst[i].<span class="built_in">split</span>(<span class="string">","</span>);</div><div class="line">			d[i] = <span class="keyword">new</span> <span class="keyword">double</span>[sSecond.length];</div><div class="line">			<span class="keyword">for</span>(<span class="built_in">int</span> j=<span class="number">0</span>;j&lt;sSecond.length;j++)&#123;</div><div class="line">				d[i][j] = Double.parseDouble(sSecond[j]);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		<span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">0</span>;i&lt;d.length;i++)&#123;</div><div class="line">			<span class="keyword">for</span>(<span class="built_in">int</span> j=<span class="number">0</span>;j&lt;d[i].length;j++)&#123;</div><div class="line">				System.out.<span class="built_in">print</span>(d[i][j]+<span class="string">" "</span>);</div><div class="line">			&#125;</div><div class="line">			System.out.<span class="built_in">println</span>();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <h5 id="File类"><a href="#File类" class="headerlink" title="File类"></a>File类</h5><h6 id="使用递归查看文件夹中的文件和文件夹"><a href="#使用递归查看文件夹中的文件和文件夹" class="headerlink" title="使用递归查看文件夹中的文件和文件夹"></a>使用递归查看文件夹中的文件和文件夹</h6><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="comment">/*</span></div><div class="line">*递归查看文件</div><div class="line">*/</div><div class="line"><span class="keyword">public</span> class FileTest&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args)&#123;</div><div class="line">		<span class="comment">/*String separator = File.separator;</span></div><div class="line">		String filename = "myfile.txt";</div><div class="line">		String directory = "mydir1"+separator+"mydir2";</div><div class="line">		File f = new File(directory,filename);</div><div class="line">		if(f.exists())&#123;</div><div class="line">			System.out.println("文件名："+f.getAbsolutePath());</div><div class="line">			System.out.println("文件大小："+f.length());</div><div class="line">		&#125;else&#123;</div><div class="line">			f.getParentFile().mkdirs();</div><div class="line">			try&#123;</div><div class="line">				f.createNewFile();</div><div class="line">			&#125;catch(IOException e)&#123;</div><div class="line">				e.printStackTrace();</div><div class="line">			&#125;</div><div class="line">		&#125;*/</div><div class="line">		</div><div class="line">		<span class="built_in">File</span> f = <span class="keyword">new</span> <span class="built_in">File</span>(<span class="string">"C:/Users/junius/Documents/java"</span>);</div><div class="line">		tree(f);</div><div class="line">				</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> tree(<span class="built_in">File</span> f,<span class="keyword">int</span> level)&#123;</div><div class="line">		<span class="keyword">String</span> perStr = <span class="string">""</span>;</div><div class="line">		<span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;level<span class="number">-1</span>;i++)&#123;</div><div class="line">			perStr +=<span class="string">"    "</span>;</div><div class="line">		&#125;</div><div class="line">		perStr +=<span class="string">"  |-"</span></div><div class="line">		</div><div class="line">		<span class="built_in">File</span>[] childFiles = f.listFiles();</div><div class="line">		<span class="built_in">try</span>&#123;</div><div class="line">			<span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;childFiles.length;i++)&#123;</div><div class="line">				System.out.<span class="built_in">println</span>(childFiles[i].getName());</div><div class="line">				<span class="built_in">if</span>(childFiles[i].<span class="built_in">isDirectory</span>())&#123;</div><div class="line">					tree(childFiles[i]);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="built_in">catch</span>(NullPointerException e)&#123;&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -360,18 +360,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/06/Java小示例04/" rel="next" title="Java小示例04">
-                <i class="fa fa-chevron-left"></i> Java小示例04
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/05/04/Java小示例02/" rel="prev" title="Java小示例02">
-                Java小示例02 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/05/Java小示例03/" rel="prev" title="Java小示例03">
+                Java小示例03 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -483,7 +479,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#String"><span class="nav-number">1.</span> <span class="nav-text">String</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#split方法运用"><span class="nav-number">1.1.</span> <span class="nav-text">split方法运用</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#File类"><span class="nav-number">1.</span> <span class="nav-text">File类</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#使用递归查看文件夹中的文件和文件夹"><span class="nav-number">1.1.</span> <span class="nav-text">使用递归查看文件夹中的文件和文件夹</span></a></li></ol></li></ol></div>
             
 
           </div>
