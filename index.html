@@ -253,6 +253,125 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/05/Java小示例03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="goldmokey">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大道至简">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/05/Java小示例03/" itemprop="url">
+                  Java小示例03
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-05T06:53:27+08:00">
+                2017-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="String"><a href="#String" class="headerlink" title="String"></a>String</h5><h6 id="split方法运用"><a href="#split方法运用" class="headerlink" title="split方法运用"></a>split方法运用</h6><figure class="highlight processing"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">*将字符串转换成二维double数组</div><div class="line">*/</div><div class="line"><span class="keyword">public</span> class StringDemo2&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) &#123;</div><div class="line">		<span class="keyword">double</span>[][] d;</div><div class="line">		<span class="keyword">String</span> s=<span class="string">"1,2;3,4,5;6,7,8"</span>;</div><div class="line">		<span class="keyword">String</span>[] sFirst = s.<span class="built_in">split</span>(<span class="string">";"</span>);</div><div class="line">		d = <span class="keyword">new</span> <span class="keyword">double</span>[sFirst.length][];</div><div class="line">		<span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">0</span>;i&lt;sFirst.length;i++)&#123;</div><div class="line">			<span class="keyword">String</span>[] sSecond = sFirst[i].<span class="built_in">split</span>(<span class="string">","</span>);</div><div class="line">			d[i] = <span class="keyword">new</span> <span class="keyword">double</span>[sSecond.length];</div><div class="line">			<span class="keyword">for</span>(<span class="built_in">int</span> j=<span class="number">0</span>;j&lt;sSecond.length;j++)&#123;</div><div class="line">				d[i][j] = Double.parseDouble(sSecond[j]);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		<span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">0</span>;i&lt;d.length;i++)&#123;</div><div class="line">			<span class="keyword">for</span>(<span class="built_in">int</span> j=<span class="number">0</span>;j&lt;d[i].length;j++)&#123;</div><div class="line">				System.out.<span class="built_in">print</span>(d[i][j]+<span class="string">" "</span>);</div><div class="line">			&#125;</div><div class="line">			System.out.<span class="built_in">println</span>();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/04/Java小示例02/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1085,7 +1204,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
