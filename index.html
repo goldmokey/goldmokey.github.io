@@ -1002,7 +1002,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/28/git基础篇1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/28/Git基础篇-命令行/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="goldmokey">
@@ -1024,8 +1024,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/04/28/git基础篇1/" itemprop="url">
-                  git基础篇1
+                <a class="post-title-link" href="/2017/04/28/Git基础篇-命令行/" itemprop="url">
+                  Git基础篇-命令行
                 </a>
               
             
@@ -1051,6 +1051,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Git学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1078,19 +1100,35 @@
       
         
           <ul>
-<li>init</li>
-<li>config</li>
-<li>add</li>
-<li>commit</li>
-<li>clone</li>
-<li>clone_to_folder</li>
-<li>ignore</li>
-<li>include</li>
-<li>status</li>
-<li>number_of_files_committed
+<li><p>init<br>初始化一个仓库 </p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">git init</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>config<br>全局或本地配置用户名和邮箱</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">config</span> <span class="comment">--global user.name ***</span></div><div class="line">git <span class="built_in">config</span> <span class="comment">--global user.email myemail@e.com</span></div><div class="line">git <span class="built_in">config</span> <span class="comment">--local user.name  ***</span></div><div class="line">git <span class="built_in">config</span> <span class="comment">--local user.email myemail2@e.com</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>add<br>添加文件</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">add</span><span class="bash"> fileName</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>commit<br>提交文件</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">git</span> commit -m <span class="string">"add fileName"</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>clone<br>克隆一个仓库，默认文件夹名就是仓库名</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">clone</span> <span class="title">https</span>://github.com/name1/name2/repository</div></pre></td></tr></table></figure>
+</li>
+<li><p>clone_to_folder<br>克隆一个仓库，并指定文件夹</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">clone</span> <span class="title">https</span>://github.com/name1/name2/repository repo2</div></pre></td></tr></table></figure>
+</li>
+<li><p>ignore<br>编辑.gitignore文件,这样提交时可以忽略某些或某类文件，当然使用强大的正则表达式</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">vim</span> <span class="selector-class">.gitignore</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>include<br>包含某些文件，使用同ignore</p>
+</li>
+<li>status<br>查看所有untracked的文件<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">git status</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/04/28/git基础篇1/#more" rel="contents">
+            <a class="btn" href="/2017/04/28/Git基础篇-命令行/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1307,13 +1345,22 @@
           
 
           
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
 
           
             
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
