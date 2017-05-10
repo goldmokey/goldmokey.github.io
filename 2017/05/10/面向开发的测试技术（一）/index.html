@@ -1,0 +1,746 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="开发测试,测试技术," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="引子自上世纪末Kent Beck提出TDD(Test-Driven Development)开发理念以来，开发和测试的边界变的越来越模糊，从原本上下游的依赖关系，逐步演变成你中有我、我中有你的互赖关系，甚至很多公司设立了新的QE(Quality Engineer)职位。和传统的QA(Quality Assurance)不同，QE的主要职责是通过工程化的手段保证项目质量，这些手段包括但不仅限于编写单">
+<meta name="keywords" content="开发测试,测试技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向开发的测试技术（一）">
+<meta property="og:url" content="http://yoursite.com/2017/05/10/面向开发的测试技术（一）/index.html">
+<meta property="og:site_name" content="大道至简">
+<meta property="og:description" content="引子自上世纪末Kent Beck提出TDD(Test-Driven Development)开发理念以来，开发和测试的边界变的越来越模糊，从原本上下游的依赖关系，逐步演变成你中有我、我中有你的互赖关系，甚至很多公司设立了新的QE(Quality Engineer)职位。和传统的QA(Quality Assurance)不同，QE的主要职责是通过工程化的手段保证项目质量，这些手段包括但不仅限于编写单">
+<meta property="og:image" content="http://yoursite.com/images/test_01.png">
+<meta property="og:updated_time" content="2017-05-10T14:35:06.743Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面向开发的测试技术（一）">
+<meta name="twitter:description" content="引子自上世纪末Kent Beck提出TDD(Test-Driven Development)开发理念以来，开发和测试的边界变的越来越模糊，从原本上下游的依赖关系，逐步演变成你中有我、我中有你的互赖关系，甚至很多公司设立了新的QE(Quality Engineer)职位。和传统的QA(Quality Assurance)不同，QE的主要职责是通过工程化的手段保证项目质量，这些手段包括但不仅限于编写单">
+<meta name="twitter:image" content="http://yoursite.com/images/test_01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/10/面向开发的测试技术（一）/"/>
+
+
+
+
+
+  <title>面向开发的测试技术（一） | 大道至简</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大道至简</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好好学习，天天向上！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/10/面向开发的测试技术（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="goldmokey">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大道至简">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                面向开发的测试技术（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-10T22:16:36+08:00">
+                2017-05-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h4><p>自上世纪末Kent Beck提出TDD(Test-Driven Development)开发理念以来，开发和测试的边界变的越来越模糊，从原本上下游的依赖关系，逐步演变成你中有我、我中有你的互赖关系，甚至很多公司设立了新的QE(Quality Engineer)职位。和传统的QA(Quality Assurance)不同，QE的主要职责是通过工程化的手段保证项目质量，这些手段包括但不仅限于编写单元测试、集成测试，搭建自动化测试流程，设计性能测试等。可以说，QE身上兼具了QA的质量意识和开发的工程能力。从这篇开始，我会从开发的角度分三期聊聊QE这个亦测试亦开发的角色所需的基本技能。</p>
+<h4 id="什么是Mock？"><a href="#什么是Mock？" class="headerlink" title="什么是Mock？"></a>什么是Mock？</h4><p>在软件测试领域，Mock的意思是模拟，简单来说，就是通过某种技术手段模拟测试对象的行为，返回预先设计的结果。这里的关键词是<strong>预先设计</strong>，也就是说对于任意被测试的对象，可以根据具体测试场景的需要，返回特定的结果。打个比方，就像BBC纪录片里面的假企鹅，可以根据拍摄需要作出不同的反应。</p>
+<h4 id="Mock有什么用？"><a href="#Mock有什么用？" class="headerlink" title="Mock有什么用？"></a>Mock有什么用？</h4><p>理解了什么是Mock，再来看Mock有哪些用途。首先，Mock可以用来解除测试对象对外部服务的依赖（比如数据库，第三方接口等），使得测试用例可以<strong>独立运行</strong>。不管是传统的单体应用，还是现在流行的微服务，这点都特别重要，因为任何外部依赖的存在都会极大的限制测试用例的可迁移性和稳定性。可迁移性是指，如果要在一个新的测试环境中运行相同的测试用例，那么除了要保证测试对象自身能够正常运行，还要保证所有依赖的外部服务也能够被正常调用。稳定性是指，如果外部服务不可用，那么测试用例也可能会失败。通过Mock去除外部依赖之后，不管是测试用例的可迁移性还是稳定性，都能够上一个台阶。<br><a id="more"></a><br><img src="/images/test_01.png" alt=""><br>Mock的第二个好处是替换外部服务调用，<strong>提升测试用例的运行速度</strong>。任何外部服务调用至少是跨进程级别的消耗，甚至是跨系统、跨网络的消耗，而Mock可以把消耗降低到进程内。比如原来一次秒级的网络请求，通过Mock可以降至毫秒级，整整3个数量级的差别。<br>Mock的第三个好处是<strong>提升测试效率</strong>。这里说的测试效率有两层含义。第一层含义是单位时间运行的测试用例数，这是运行速度提升带来的直接好处。而第二层含义是一个QE单位时间创建的测试用例数。如何理解这第二层含义呢？以单体应用为例，随着业务复杂度的上升，为了运行一个测试用例可能需要准备很多测试数据，与此同时还要尽量保证多个测试用例之间的测试数据互不干扰。为了做到这一点，QE往往需要花费大量的时间来维护一套可运行的测试数据。有了Mock之后，由于去除了测试用例之间共享的数据库依赖，QE就可以针对每一个或者每一组测试用例设计一套独立的测试数据，从而很容易的做到不同测试用例之间的数据隔离性。而对于微服务，由于一个微服务可能级联依赖很多其他的微服务，运行一个测试用例甚至需要跨系统准备一套测试数据，如果没有Mock，基本上可以说是不可能的。因此，不管是单体应用还是微服务，有了Mock之后，QE就可以省去大量的准备测试数据的时间，专注于测试用例本身，自然也就提升了单人的测试效率。</p>
+<h4 id="如何Mock？"><a href="#如何Mock？" class="headerlink" title="如何Mock？"></a>如何Mock？</h4><p>说了这么多Mock的好处，那么究竟如何在测试中使用Mock呢？针对不同的测试场景，可以选择不同的Mock框架。</p>
+<h5 id="Mockito"><a href="#Mockito" class="headerlink" title="Mockito"></a>Mockito</h5><p>如果测试对象是一个方法，尤其是涉及数据库操作的方法，那么<a href="http://site.mockito.org/" target="_blank" rel="external">Mockito</a>可能是最好的选择。作为使用最广泛的Mock框架，Mockito出于<a href="http://easymock.org/" target="_blank" rel="external">EasyMock</a>而胜于EasyMock，乃至被默认集成进Spring Testing。其实现原理是，通过CGLib在运行时为每一个被Mock的类或者对象动态生成一个<strong>代理对象</strong>，返回<strong>预先设计</strong>的结果。集成Mockito的基本步骤是：</p>
+<ul>
+<li>标记被Mock的类或者对象，生成代理对象</li>
+<li>通过Mockito API定制代理对象的行为</li>
+<li>调用代理对象的方法，获得预先设计的结果<br>下面是我GitHub上的<a href="https://github.com/emac/spring-boot-features-demo" target="_blank" rel="external">示例工程</a>里的一个例子，<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RunWith</span>(SpringRunner.<span class="keyword">class</span>)</div><div class="line"><span class="meta">@SpringBootTest</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SignonServiceTests</span> &#123;</span></div><div class="line">    <span class="comment">// 测试对象，一个服务类</span></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> SignonService signonService;</div><div class="line">    <span class="comment">// 被Mock的类，被服务类所依赖的一个DAO类</span></div><div class="line">    <span class="meta">@MockBean</span></div><div class="line">    <span class="keyword">private</span> SignonDao dao;</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> testFindAll() &#123;</div><div class="line">        <span class="comment">// SignonService#findAll()内部会调用SignonDao#findAll()</span></div><div class="line">        <span class="comment">// 如果不做定制，所有被Mock的类默认返回空</span></div><div class="line">        List&lt;Signon&gt; signons = signonService.findAll();</div><div class="line">        assertTrue(CollectionUtils.isEmpty(signons));</div><div class="line">        <span class="comment">// 定制返回结果</span></div><div class="line">        Signon signon = <span class="keyword">new</span> Signon();</div><div class="line">        signon.setUsername(<span class="string">"foo"</span>);</div><div class="line">        when(dao.findAll()).thenReturn(Lists.newArrayList(signon));</div><div class="line">        signons = signonService.findAll();</div><div class="line">        <span class="comment">// 验证返回结果和预先设计的结果一致</span></div><div class="line">        assertEquals(<span class="number">1</span>, signons.size());</div><div class="line">        assertEquals(<span class="string">"foo"</span>, signons.get(<span class="number">0</span>).getUsername());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>从上面的测试用例可以看到，通过Mock服务类所依赖的DAO类，我们可以跳过所有的数据库操作，任意定制返回结果，从而专注于测试服务类内部的业务逻辑。这是传统的非Mock测试所难以实现的。</p>
+<p>注意：Mockito不支持Mock私有方法或者静态方法，如果要Mock这类方法，可以使用<a href="https://github.com/powermock/powermock" target="_blank" rel="external">PowerMock</a>。</p>
+<h5 id="WireMock"><a href="#WireMock" class="headerlink" title="WireMock"></a>WireMock</h5><p>如果说Mocketo是瑞士军刀，可以Mock Everything，那么WireMock就是为微服务而生的倚天剑。和处在对象层的Mockito不同，<a href="http://wiremock.org/" target="_blank" rel="external">WireMock</a>针对的是<strong>API</strong>。假设有两个微服务，Service-A和Service-B，Service-A里的一个API（姑且称为API-1），依赖于Service-B，那么使用传统的测试方法，测试API-1时必然需要同时启动Service-B。如果使用WireMock，那么就可以在<strong>Service-A</strong>端Mock所有依赖的Service-B的API，从而去掉Service-B这个外部依赖。</p>
+<p>同样看一个我GitHub上的<a href="https://github.com/emac/spring-boot-features-demo" target="_blank" rel="external">示例工程</a>里的一个例子，<br><figure class="highlight pony"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">@<span class="type">RunWith</span>(<span class="type">SpringRunner</span>.<span class="keyword">class</span>)</div><div class="line">@<span class="type">WebMvcTest</span>(<span class="type">VacationController</span>.<span class="keyword">class</span>)</div><div class="line">public <span class="class"><span class="keyword">class</span> <span class="title">VacationControllerTests</span> &#123;</span></div><div class="line">    <span class="comment">// Mock被依赖的另一个微服务</span></div><div class="line">    @<span class="type">Rule</span></div><div class="line">    public <span class="type">WireMockRule</span> wireMockRule = <span class="function"><span class="keyword">new</span> <span class="title">WireMockRule</span>(<span class="number">3001</span>);</span></div><div class="line">    </div><div class="line">    @<span class="title">Autowired</span></div><div class="line">    <span class="title">private</span> <span class="title">MockMvc</span> <span class="title">mockMvc</span>;</div><div class="line">    @<span class="title">Autowired</span></div><div class="line">    <span class="title">private</span> <span class="title">ObjectMapper</span> <span class="title">objectMapper</span>;</div><div class="line">    @<span class="title">Before</span></div><div class="line">    <span class="title">public</span> <span class="title">void</span> <span class="title">before</span>() <span class="title">throws</span> <span class="title">JsonProcessingException</span> &#123;</div><div class="line">        <span class="comment">// 定制返回结果</span></div><div class="line">        <span class="title">JsonResult</span>&lt;<span class="title">Boolean</span>&gt; <span class="title">expected</span> = <span class="title">JsonResult</span>.<span class="title">ok</span>(true);</div><div class="line">        <span class="title">stubFor</span>(get(urlPathEqualTo("/api/vacation/isWeekend"))</div><div class="line">                .<span class="title">willReturn</span>(aResponse()</div><div class="line">                        .<span class="title">withStatus</span>(<span class="type">OK</span>.value())</div><div class="line">                        .<span class="title">withHeader</span>(<span class="type">CONTENT_TYPE</span>, <span class="type">APPLICATION_JSON_UTF8_VALUE</span>)</div><div class="line">                        .<span class="title">withBody</span>(objectMapper.writeValueAsString(expected))));</div><div class="line">    &#125;</div><div class="line">    @<span class="title">Test</span></div><div class="line">    <span class="title">public</span> <span class="title">void</span> <span class="title">testIsWeekendProxy</span>() <span class="title">throws</span> <span class="title">Exception</span> &#123;</div><div class="line">        <span class="comment">// 构造请求参数</span></div><div class="line">        <span class="title">VacationRequest</span> <span class="title">request</span> = <span class="title">new</span> <span class="title">VacationRequest</span>();</div><div class="line">        <span class="title">request</span>.<span class="title">setType</span>(<span class="type">PERSONAL</span>);</div><div class="line">        <span class="title">OffsetDateTime</span> <span class="title">lastSunday</span> = <span class="title">OffsetDateTime</span>.<span class="title">now</span>().<span class="title">with</span>(<span class="type">TemporalAdjusters</span>.previous(<span class="type">SUNDAY</span>));</div><div class="line">        <span class="title">request</span>.<span class="title">setStart</span>(lastSunday);</div><div class="line">        <span class="title">request</span>.<span class="title">setEnd</span>(lastSunday.plusDays(<span class="number">1</span>));</div><div class="line">        <span class="title">MockHttpServletRequestBuilder</span> <span class="title">builder</span> = <span class="title">MockMvcRequestBuilders</span>.<span class="title">get</span>("/vacation/isWeekend");</div><div class="line">        <span class="title">request</span>.<span class="title">toMap</span>().<span class="title">forEach</span>((k, v) -&gt; <span class="title">builder</span>.<span class="title">param</span>(k, v));</div><div class="line">        <span class="title">JsonResult</span>&lt;<span class="title">Boolean</span>&gt; <span class="title">expected</span> = <span class="title">JsonResult</span>.<span class="title">ok</span>(true);</div><div class="line">        <span class="title">mockMvc</span>.<span class="title">perform</span>(builder)</div><div class="line">                <span class="comment">// 验证返回结果和预先设计的结果一致</span></div><div class="line">                .<span class="title">andExpect</span>(status().<span class="title">isOk</span>())</div><div class="line">                .<span class="title">andExpect</span>(content().<span class="title">contentType</span>(<span class="type">APPLICATION_JSON_UTF8</span>))</div><div class="line">                .<span class="title">andExpect</span>(content().<span class="title">string</span>(objectMapper.writeValueAsString(expected)));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>和Mockito类似，在测试用例中集成WireMock的基本步骤是：</p>
+<ul>
+<li>声明代理服务，以替代被Mock的微服务</li>
+<li>通过WireMock API定制代理服务的返回结果</li>
+<li>调用代理服务，获得预先设计的结果<br>值得一提的是，除了API方式的集成，WireMock还支持以Jar包的形式独立运行，从配置文件中加载预先设计的响应结果，以替代被Mock的微服务。更多信息可以参阅<a href="http://wiremock.org/docs/" target="_blank" rel="external">官方文档</a>。</li>
+</ul>
+<p>其他类似的Mock API的框架还有OkHttp的<a href="https://github.com/square/okhttp/tree/master/mockwebserver" target="_blank" rel="external">mockwebserver</a>，<a href="https://github.com/dreamhead/moco" target="_blank" rel="external">moco</a>和<a href="http://www.mock-server.com/" target="_blank" rel="external">mockserver</a>。mockwebserver也属于嵌入式Mock框架的范畴，但功能过于简单。moco，mockserver虽然功能完善，但需要独立部署，和WireMock相比不具有优势。</p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>以上就是我对Mock技术的一些见解。最后还要说一句，Mock技术虽然强大，但主要还是适用于单元测试，在集成测试，性能测试，自动化测试等其他测试领域使用并不多。</p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<li><a href="https://www.linkedin.com/pulse/moving-from-quality-assurance-engineering-brief-history-nitin-mehra" target="_blank" rel="external">Moving from Quality Assurance to Quality Engineering. A brief history in time and what lies ahead</a>.</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/开发测试/" rel="tag"># 开发测试</a>
+          
+            <a href="/tags/测试技术/" rel="tag"># 测试技术</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/09/Java小示例05/" rel="prev" title="Java小示例05">
+                Java小示例05 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="goldmokey" />
+          <p class="site-author-name" itemprop="name">goldmokey</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习是一辈子的事情！</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是Mock？"><span class="nav-number">2.</span> <span class="nav-text">什么是Mock？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mock有什么用？"><span class="nav-number">3.</span> <span class="nav-text">Mock有什么用？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何Mock？"><span class="nav-number">4.</span> <span class="nav-text">如何Mock？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Mockito"><span class="nav-number">4.1.</span> <span class="nav-text">Mockito</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#WireMock"><span class="nav-number">4.2.</span> <span class="nav-text">WireMock</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小结"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">goldmokey</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
