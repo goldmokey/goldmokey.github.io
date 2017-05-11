@@ -1,0 +1,753 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="开发测试,测试技术," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前情概要： 面向开发的测试技术（一）：Mock什么是性能测试？先来看一下维基百科里对性能测试的定义， In software engineering, performance testing is in general, a testing practice performed to determine how a system performs in terms of responsivenes">
+<meta name="keywords" content="开发测试,测试技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向开发的测试技术（二）">
+<meta property="og:url" content="https://github.com/goldmokey/2017/05/11/面向开发的测试技术（二）/index.html">
+<meta property="og:site_name" content="大道至简">
+<meta property="og:description" content="前情概要： 面向开发的测试技术（一）：Mock什么是性能测试？先来看一下维基百科里对性能测试的定义， In software engineering, performance testing is in general, a testing practice performed to determine how a system performs in terms of responsivenes">
+<meta property="og:image" content="https://github.com/images/test_02.png">
+<meta property="og:image" content="https://github.com/images/top-percentiles.png">
+<meta property="og:image" content="https://github.com/images/latency-statistics.png">
+<meta property="og:image" content="https://github.com/images/jmeter-group.png">
+<meta property="og:image" content="https://github.com/images/jmeter-request.png">
+<meta property="og:image" content="https://github.com/images/jmeter-aggregate-graph.png">
+<meta property="og:updated_time" content="2017-05-11T13:34:41.081Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面向开发的测试技术（二）">
+<meta name="twitter:description" content="前情概要： 面向开发的测试技术（一）：Mock什么是性能测试？先来看一下维基百科里对性能测试的定义， In software engineering, performance testing is in general, a testing practice performed to determine how a system performs in terms of responsivenes">
+<meta name="twitter:image" content="https://github.com/images/test_02.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/goldmokey/2017/05/11/面向开发的测试技术（二）/"/>
+
+
+
+
+
+  <title>面向开发的测试技术（二） | 大道至简</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大道至简</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好好学习，天天向上！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://github.com/goldmokey/2017/05/11/面向开发的测试技术（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="goldmokey">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大道至简">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                面向开发的测试技术（二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-11T21:17:14+08:00">
+                2017-05-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="前情概要："><a href="#前情概要：" class="headerlink" title="前情概要："></a>前情概要：</h4><ul>
+<li><a href="https://goldmokey.github.io/2017/05/10/%E9%9D%A2%E5%90%91%E5%BC%80%E5%8F%91%E7%9A%84%E6%B5%8B%E8%AF%95%E6%8A%80%E6%9C%AF%EF%BC%88%E4%B8%80%EF%BC%89/" target="_blank" rel="external">面向开发的测试技术（一）：Mock</a><h4 id="什么是性能测试？"><a href="#什么是性能测试？" class="headerlink" title="什么是性能测试？"></a>什么是性能测试？</h4>先来看一下维基百科里对性能测试的定义，<blockquote>
+<p><em>In software engineering, performance testing is in general, a testing practice performed to determine how a system performs in terms of responsiveness and stability under a particular workload. - Wikipedia</em><br>注意上述定义中有三个关键词：</p>
+</blockquote>
+</li>
+<li>responsiveness，即响应时间，请求发出去之后，服务端需要多久才能返回结果，显然响应时间越短，性能越好。</li>
+<li>stability，即稳定性，同样的请求，不同时刻发出去，响应时间差别越小，稳定性越好，性能也越好。</li>
+<li>workload，即负载，同一时刻服务端收到的请求数量，其中单位时间内<strong>成功处理</strong>的请求数量即吞吐量，吞吐量越大，性能越好。<br>响应时间和吞吐量是衡量应用性能好坏最重要的两个指标。对于绝大多数应用，刚开始的时候，响应时间最短；随着负载的增大，吞吐量快速上升，响应时间也逐渐变长；当负载超过某一个值之后，响应时间会突然呈指数级放大，同时吞吐量也应声下跌，应用性能急剧下降，整个过程如下：<br><img src="/images/test_02.png" alt=""><br>图片出处：<a href="http://coolshell.cn/articles/17381.html" target="_blank" rel="external">性能测试应该怎么做？</a><h4 id="性能测试的目的"><a href="#性能测试的目的" class="headerlink" title="性能测试的目的"></a>性能测试的目的</h4>了解了应用性能变化的普遍规律，性能测试的目的也就有了答案：针对某一应用，找出响应时间和吞吐量的量化关系，找到应用性能变化的临界点。你可能会问，知道了这些有什么用呢？在我看来，至少有3个层面的好处：</li>
+</ul>
+<ol>
+<li>有的放矢，提高资源利用率。性能测试的过程就是量化性能的过程，有了各种性能数据，你才能对应用性能进行定量分析，找到并解决潜在的性能问题，从而提高资源利用率。</li>
+<li>科学的进行容量规划。找到了应用性能变化的临界点，也就很容易找到单节点的性能极限，这是进行容量规划的重要决策依据。比如某一应用在单节点下的极限吞吐量是2000 QPS，那么面对10000 QPS的流量，至少需要部署5个节点。</li>
+<li>改善QoS（Quality of Service）。很多时候，资源是有限的，面对超出服务能力的流量，为了保证QoS，必须做出取舍（比如限流降级，开关预案等），应用性能数据是设计QoS方案的重要依据。<h4 id="性能测试的三个常见误区"><a href="#性能测试的三个常见误区" class="headerlink" title="性能测试的三个常见误区"></a>性能测试的三个常见误区</h4><h5 id="误区1：只看平均值，不懂TP95-TP99"><a href="#误区1：只看平均值，不懂TP95-TP99" class="headerlink" title="误区1：只看平均值，不懂TP95/TP99"></a>误区1：只看平均值，不懂TP95/TP99</h5>用平均值来衡量响应时间是性能测试中最常见的误区。从第1小节的插图可以看出，随着吞吐量的增大，响应时间会逐渐变长，当达到最大吞吐量之后，响应时间会开始加速上升，尤其是排在后面的请求。在这个时刻，如果只看平均值，你往往察觉不到问题，因为大部分请求的响应时间还是很短的，慢请求只占一个很小的比例，所以平均值变化不大。但实际上，可能已经有超过1%，甚至5%的请求的响应时间已经超出设计的范围了。<br>更科学、更合理的指标是看TP95或者TP99响应时间。TP是Top Percentile的缩写，是一个统计学术语，用来描述一组数值的分布特征。以TP95为例，假设有100个数字，从小到大排序之后，第95个数字的值就是这组数字的TP95值，表示至少有95%的数字是小于或者等于这个值。<br>以一次具体的性能测试为例，<br><img src="/images/top-percentiles.png" alt=""><br><img src="/images/latency-statistics.png" alt=""><br>总共有1000次请求，平均响应时间是58.9ms，TP95是123.85ms（平均响应时间的2.1倍），TP99是997.99ms（平均响应时间的16.9倍）。假设应用设计的最大响应时间是100ms，单看平均时间是完全符合要求的，但实际上已经有超过50个请求失败了。如果看TP95或者TP99，问题就很清楚了。<h5 id="误区2：只关注响应时间和吞吐量，忽视请求成功率"><a href="#误区2：只关注响应时间和吞吐量，忽视请求成功率" class="headerlink" title="误区2：只关注响应时间和吞吐量，忽视请求成功率"></a>误区2：只关注响应时间和吞吐量，忽视请求成功率</h5>虽说衡量应用性能好坏最主要是看响应时间和吞吐量，但这里有个大前提，所有请求（如果做不到所有，至少也要绝大多数请求，比如99.9%）都被成功处理了，而不是返回一堆错误码。如果不能保证这一点，那么再低的响应时间，再高的吞吐量都是没有意义的。<h5 id="误区3：忘了测试端也存在性能瓶颈"><a href="#误区3：忘了测试端也存在性能瓶颈" class="headerlink" title="误区3：忘了测试端也存在性能瓶颈"></a>误区3：忘了测试端也存在性能瓶颈</h5>性能测试的第三个误区是只关注服务端，而忽略了测试端本身可能也存在限制。比如测试用例设置了10000并发数，但实际运行用例的机器最大只支持5000并发数，如果只看服务端的数据，你可能会误以为服务端最大就只支持5000并发数。如果遇到这种情况，或者换用更高性能的测试机器，或者增加测试机器的数量。<h4 id="如何进行性能测试？"><a href="#如何进行性能测试？" class="headerlink" title="如何进行性能测试？"></a>如何进行性能测试？</h4>介绍完性能测试相关的一些概念之后，再来看一下有哪些工具可以进行性能测试。<h5 id="JMeter"><a href="#JMeter" class="headerlink" title="JMeter"></a>JMeter</h5><a href="http://jmeter.apache.org/" target="_blank" rel="external">JMeter</a>可能是最常用的性能测试工具。它既支持图形界面，也支持命令行，属于黑盒测试的范畴，对非开发人员比较友好，上手也非常容易。图形界面一般用于编写、调试测试用例，而实际的性能测试建议还是在命令行下运行。<br><img src="/images/jmeter-group.png" alt="并发设置"><br><img src="/images/jmeter-request.png" alt="请求参数"><br><img src="/images/jmeter-aggregate-graph.png" alt="结果报表"><br>命令行下的常用命令：</li>
+</ol>
+<ul>
+<li>设置JVM参数：JVM_ARGS=”-Xms2g -Xmx2g”</li>
+<li>运行测试：jmeter -n -t <jmx_file></jmx_file></li>
+<li>运行测试同时生成报表：jmeter -n -t <jmx_file> -l <log_file> -e -o <report_dir><br>除了JMeter，其他常用的性能测试工具还有<a href="http://httpd.apache.org/docs/2.2/programs/ab.html" target="_blank" rel="external">ab</a>, <a href="http://www.acme.com/software/http_load/" target="_blank" rel="external">http_load</a>, <a href="https://github.com/wg/wrk">wrk</a>以及商用的<a href="http://www8.hp.com/us/en/software-solutions/loadrunner-load-testing/index.html" target="_blank" rel="external">LoaderRunner</a>。<h5 id="JMH"><a href="#JMH" class="headerlink" title="JMH"></a>JMH</h5>如果测试用例比较复杂，或者负责性能测试的人员具有一定的开发能力，也可以考虑使用一些框架编写单独的性能测试程序。对于Java开发人员而言，JMH是一个推荐的选择。类似于JUnit，<a href="http://openjdk.java.net/projects/code-tools/jmh/" target="_blank" rel="external">JMH</a>提供了一系列注解用于编写测试用例，以及一个运行测试的引擎。事实上，即将发布的<a href="https://dzone.com/articles/microbenchmarking-comes-to-java-9" target="_blank" rel="external">JDK 9</a>默认就会包含JMH。<br>下面是GitHub上的<a href="https://github.com/emac/spring-boot-features-demo">示例工程</a>里的一个例子，<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@BenchmarkMode</span>(Mode.Throughput)</div><div class="line"><span class="meta">@Fork</span>(<span class="number">1</span>)</div><div class="line"><span class="meta">@Threads</span>(Threads.MAX)</div><div class="line"><span class="meta">@State</span>(Scope.Benchmark)</div><div class="line"><span class="meta">@Warmup</span>(iterations = <span class="number">1</span>, time = <span class="number">3</span>)</div><div class="line"><span class="meta">@Measurement</span>(iterations = <span class="number">3</span>, time = <span class="number">3</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VacationClientBenchmark</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> VacationClient vacationClient;</div><div class="line">    <span class="meta">@Setup</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUp</span><span class="params">()</span> </span>&#123;</div><div class="line">        VacationClientConfig clientConfig = <span class="keyword">new</span> VacationClientConfig(<span class="string">"http://localhost:3000"</span>);</div><div class="line">        vacationClient = <span class="keyword">new</span> VacationClient(clientConfig);</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Benchmark</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">benchmarkIsWeekend</span><span class="params">()</span> </span>&#123;</div><div class="line">        VacationRequest request = <span class="keyword">new</span> VacationRequest();</div><div class="line">        request.setType(PERSONAL);</div><div class="line">        OffsetDateTime lastSunday = OffsetDateTime.now().with(TemporalAdjusters.previous(SUNDAY));</div><div class="line">        request.setStart(lastSunday);</div><div class="line">        request.setEnd(lastSunday.plusDays(<span class="number">1</span>));</div><div class="line">        Asserts.isTrue(vacationClient.isWeekend(request).isSuccess());</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 仅限于IDE中运行</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> RunnerException </span>&#123;</div><div class="line">        Options opt = <span class="keyword">new</span> OptionsBuilder()</div><div class="line">                .include(VacationClientBenchmark.class.getSimpleName())</div><div class="line">                .build();</div><div class="line">        <span class="keyword">new</span> Runner(opt).run();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</report_dir></log_file></jmx_file></li>
+</ul>
+<p>其中：</p>
+<ul>
+<li>@BenchmarkMode: 性能测试模式，支持Throughput，AverageTime，SingleShotTime等多种模式。</li>
+<li>@Fork: 设置运行性能测试的Fork进程数，默认是0，表示共用JMH主进程。</li>
+<li>@Threads: 并发数，Threads.MAX表示同系统的CPU核数。</li>
+<li>@Warmup和@Measurement: 分别设置预热和实际性能测试的运行轮数，每轮持续的时间等</li>
+<li>@Setup和@Benchmark: 等同于JUnit里的@BeforeClass和@Test<br>在命令行下，使用JMH框架编写的性能测试程序只能以Jar包的形式运行（Main函数固定为org.openjdk.jmh.Main），因此一般会针对每个JMH程序单独维护一个项目。如果是Maven项目，可以使用官方提供的jmh-java-benchmark-archetype，如果是Gradle项目，可以使用<a href="https://github.com/melix/jmh-gradle-plugin">jmh-gradle-plugin</a>插件。<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4>以上就是我对性能测试的一些见解。下一篇我将聊一下Web的自动化测试，敬请期待。<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><a href="https://segmentfault.com/a/1190000008219543" target="_blank" rel="external">关于性能测试的几个要点</a><br><a href="http://coolshell.cn/articles/17381.html" target="_blank" rel="external">性能测试应该怎么做？</a><br><a href="http://jm.taobao.org/2016/12/23/20161223/" target="_blank" rel="external">阿里双十一大促，技术准备只做了这两件事情？</a><br><a href="http://jm.taobao.org/2016/12/29/20161229/" target="_blank" rel="external">阿里资深技术专家丁宇谈双11高可用架构演进之路</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/开发测试/" rel="tag"># 开发测试</a>
+          
+            <a href="/tags/测试技术/" rel="tag"># 测试技术</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/10/面向开发的测试技术（一）/" rel="prev" title="面向开发的测试技术（一）">
+                面向开发的测试技术（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="goldmokey" />
+          <p class="site-author-name" itemprop="name">goldmokey</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习是一辈子的事情！</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前情概要："><span class="nav-number">1.</span> <span class="nav-text">前情概要：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是性能测试？"><span class="nav-number">2.</span> <span class="nav-text">什么是性能测试？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#性能测试的目的"><span class="nav-number">3.</span> <span class="nav-text">性能测试的目的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#性能测试的三个常见误区"><span class="nav-number">4.</span> <span class="nav-text">性能测试的三个常见误区</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#误区1：只看平均值，不懂TP95-TP99"><span class="nav-number">4.1.</span> <span class="nav-text">误区1：只看平均值，不懂TP95/TP99</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#误区2：只关注响应时间和吞吐量，忽视请求成功率"><span class="nav-number">4.2.</span> <span class="nav-text">误区2：只关注响应时间和吞吐量，忽视请求成功率</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#误区3：忘了测试端也存在性能瓶颈"><span class="nav-number">4.3.</span> <span class="nav-text">误区3：忘了测试端也存在性能瓶颈</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何进行性能测试？"><span class="nav-number">5.</span> <span class="nav-text">如何进行性能测试？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#JMeter"><span class="nav-number">5.1.</span> <span class="nav-text">JMeter</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#JMH"><span class="nav-number">5.2.</span> <span class="nav-text">JMH</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小结"><span class="nav-number">6.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">goldmokey</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
