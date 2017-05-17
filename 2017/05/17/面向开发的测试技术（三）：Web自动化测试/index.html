@@ -1,0 +1,790 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="开发测试,测试技术," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前情概要： 面向开发的测试技术（一）：Mock 面向开发的测试技术（二）：性能测试  QE的成人礼：从功能测试到自动化测试作为QE三部曲的最后一篇，这篇我们聊一下Web自动化测试。相比于前两篇Mock技术和性能测试，自动化测试可以说是最接近传统功能测试（也即手工测试）的一种测试技术，也可以说是区分QE和QA的分水岭。而Web自动化测试作为最常见的一类自动化测试，相关的资料和工具也是最丰富的。 自动">
+<meta name="keywords" content="开发测试,测试技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向开发的测试技术（三）：Web自动化测试">
+<meta property="og:url" content="https://github.com/goldmokey/2017/05/17/面向开发的测试技术（三）：Web自动化测试/index.html">
+<meta property="og:site_name" content="大道至简">
+<meta property="og:description" content="前情概要： 面向开发的测试技术（一）：Mock 面向开发的测试技术（二）：性能测试  QE的成人礼：从功能测试到自动化测试作为QE三部曲的最后一篇，这篇我们聊一下Web自动化测试。相比于前两篇Mock技术和性能测试，自动化测试可以说是最接近传统功能测试（也即手工测试）的一种测试技术，也可以说是区分QE和QA的分水岭。而Web自动化测试作为最常见的一类自动化测试，相关的资料和工具也是最丰富的。 自动">
+<meta property="og:image" content="https://github.com/images/web-automation.png">
+<meta property="og:image" content="https://github.com/images/selenium-vs-others.png">
+<meta property="og:image" content="https://github.com/images/selenium-webdriver.png">
+<meta property="og:image" content="https://github.com/images/selenium-grid.png">
+<meta property="og:image" content="https://github.com/images/selenium-ide.png">
+<meta property="og:image" content="https://github.com/images/selenium-grid-demo.png">
+<meta property="og:updated_time" content="2017-05-17T01:56:58.821Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面向开发的测试技术（三）：Web自动化测试">
+<meta name="twitter:description" content="前情概要： 面向开发的测试技术（一）：Mock 面向开发的测试技术（二）：性能测试  QE的成人礼：从功能测试到自动化测试作为QE三部曲的最后一篇，这篇我们聊一下Web自动化测试。相比于前两篇Mock技术和性能测试，自动化测试可以说是最接近传统功能测试（也即手工测试）的一种测试技术，也可以说是区分QE和QA的分水岭。而Web自动化测试作为最常见的一类自动化测试，相关的资料和工具也是最丰富的。 自动">
+<meta name="twitter:image" content="https://github.com/images/web-automation.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/goldmokey/2017/05/17/面向开发的测试技术（三）：Web自动化测试/"/>
+
+
+
+
+
+  <title>面向开发的测试技术（三）：Web自动化测试 | 大道至简</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大道至简</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好好学习，天天向上！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://github.com/goldmokey/2017/05/17/面向开发的测试技术（三）：Web自动化测试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="goldmokey">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大道至简">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                面向开发的测试技术（三）：Web自动化测试
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T09:33:18+08:00">
+                2017-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="前情概要："><a href="#前情概要：" class="headerlink" title="前情概要："></a>前情概要：</h4><ul>
+<li><a href="https://goldmokey.github.io/2017/05/10/%E9%9D%A2%E5%90%91%E5%BC%80%E5%8F%91%E7%9A%84%E6%B5%8B%E8%AF%95%E6%8A%80%E6%9C%AF%EF%BC%88%E4%B8%80%EF%BC%89/" target="_blank" rel="external">面向开发的测试技术（一）：Mock</a></li>
+<li><a href="https://goldmokey.github.io/2017/05/11/%E9%9D%A2%E5%90%91%E5%BC%80%E5%8F%91%E7%9A%84%E6%B5%8B%E8%AF%95%E6%8A%80%E6%9C%AF%EF%BC%88%E4%BA%8C%EF%BC%89/" target="_blank" rel="external">面向开发的测试技术（二）：性能测试</a></li>
+</ul>
+<h4 id="QE的成人礼：从功能测试到自动化测试"><a href="#QE的成人礼：从功能测试到自动化测试" class="headerlink" title="QE的成人礼：从功能测试到自动化测试"></a>QE的成人礼：从功能测试到自动化测试</h4><p>作为QE三部曲的最后一篇，这篇我们聊一下Web自动化测试。相比于前两篇Mock技术和性能测试，自动化测试可以说是最接近传统功能测试（也即手工测试）的一种测试技术，也可以说是区分QE和QA的分水岭。而Web自动化测试作为最常见的一类自动化测试，相关的资料和工具也是最丰富的。</p>
+<h4 id="自动化测试的利弊"><a href="#自动化测试的利弊" class="headerlink" title="自动化测试的利弊"></a>自动化测试的利弊</h4><p>在介绍具体的Web自动化测试技术之前，首先看一下自动化测试和功能测试的区别。在我看来，两者最大的区别在于测试人员身份的不同。在功能测试中，测试人员既要设计测试用例，又要运行手工测试，既是导演又是演员，既是教练又是球员。而在自动化测试中，演员和球员的角色都被机器所取代，测试人员只负责设计测试用例和编写自动化测试脚本。除此之外，相对于功能测试，自动化测试的不同还包括：</p>
+<h5 id="自动化测试的优势"><a href="#自动化测试的优势" class="headerlink" title="自动化测试的优势"></a>自动化测试的优势</h5><ul>
+<li>更快的测试速度，带来更高的测试效率。一般而言，运行一遍功能测试都要以小时为单位，有的甚至以天为单位。而自动化测试则一般都在分钟级别，如果运行在分布式环境下，甚至可以降到秒级。由此可见，通过自动化测试，测试人员可以省去大量的手工测试时间，从而有更多时间去熟悉业务和完善测试用例，在提高自身测试效率的同时，也有助于提升整体的软件质量。</li>
+<li>提高测试覆盖率。要理解这一点，首先要从<a href="http://www.jianshu.com/p/ab31fef12f2f" target="_blank" rel="external">正交测试</a>法说起。假设一个测试场景涉及3个测试因素，每个测试因素有3种可能的取值（水平），那么根据正交测试法，总共需要设计8个（因素数*(最大水平数-1)+1）测试用例。测试场景越复杂，所需的测试用例越多。当测试场景的复杂度超过一定程度后，纯手工的功能测试显然就无力覆盖所有的测试用例了，并且随着复杂度的升高，测试覆盖率会越来越低。然而，借助自动化测试脚本，无论测试场景多复杂，都能保证一定的测试覆盖率。</li>
+<li>更好的稳定性和可扩展性。功能测试靠人，自动化测试靠机器，因此，无论是运行测试的稳定性，还是测试能力的可扩展性（比如从测试1个应用变为测试10个应用），自动化测试都远超功能测试。<a id="more"></a>
+根据上面的描述，你就不难推导出自动化测试适用的测试场景了：</li>
+<li>回归测试。每一次应用发布，都伴随着一次回归测试。对于重复性的工作，机器显然更适合。</li>
+<li>兼容性测试。不管是Web测试，还是App测试，兼容性测试都是必不可少的一环。以Web测试为例，同样的测试用例，需要在不同的浏览器上分别运行一遍，这对测试人员而言不可谓不是一种折磨。</li>
+<li>大规模测试。如果一次测试涉及的测试用例过多（比如100+），功能测试难免会有遗漏或者重复，而自动化测试可以轻松确保一个不少，一个也不多。<br>一图以蔽之，自动化测试的优势可概括为下图：<br><img src="/images/web-automation.png" alt=""></li>
+</ul>
+<h5 id="自动化测试的局限"><a href="#自动化测试的局限" class="headerlink" title="自动化测试的局限"></a>自动化测试的局限</h5><p>说了这么多自动化测试的好处，但自动化测试也不是万能的，再来看一下它的局限所在：</p>
+<ul>
+<li>不低的技术门槛。不论是使用哪种自动化测试框架，对于测试人员而言，都存在一定的技术门槛，一般至少需要学习并掌握一门编程语言。</li>
+<li>可观的开发成本和维护成本。跟任何程序一样，无论是编写自动化测试脚本，还是在需求变化时修改脚本，都需要花费大量的时间。</li>
+<li>需求要稳定。自动化测试的前提是测试用例要稳定，而测试用例稳定的前提是需求要稳定。对于临时的或者说一次性的需求，自动化测试往往是得不偿失的。</li>
+<li>应用周期长。应用的生命周期越长，自动化测试节省的时间越多，带来的价值也越大。</li>
+</ul>
+<p>应该说，功能测试是自动化测试的基础，自动化测试是功能测试的补充，两者相互依赖，又相互促进。测试人员两手都要抓，两手都要硬。</p>
+<h4 id="如何进行Web自动化测试？"><a href="#如何进行Web自动化测试？" class="headerlink" title="如何进行Web自动化测试？"></a>如何进行Web自动化测试？</h4><p>接下来我以<a href="http://www.seleniumhq.org/" target="_blank" rel="external">Selenium</a>为例，介绍一下如何进行Web自动化测试。</p>
+<h5 id="Selenium简介"><a href="#Selenium简介" class="headerlink" title="Selenium简介"></a>Selenium简介</h5><p>Selenium是目前最流行的Web自动化测试框架之一，支持主流的浏览器和操作系统，同时支持多种编程语言接入。无论是测试，还是开发，都可以轻松上手。最新的版本是3.4.0。<br>同类的Web自动化测试框架还有：<br>开源：<a href="https://watir.com/" target="_blank" rel="external">Watir</a>, <a href="http://www.sikuli.org/" target="_blank" rel="external">Sikuli</a>, <a href="http://www.fitnesse.org/" target="_blank" rel="external">FitNess</a><br>商业：<a href="https://saas.hpe.com/en-us/software/uft" target="_blank" rel="external">HP UFT(QTP)</a>, <a href="https://www.ibm.com/developerworks/downloads/r/rft/" target="_blank" rel="external">IBM RFT</a><br><img src="/images/selenium-vs-others.png" alt=""><br><a href="https://www.edureka.co/testing-with-selenium-webdriver" target="_blank" rel="external">图片出处:https://www.edureka.co/testing-with-selenium-webdriver</a><br><strong>组成</strong></p>
+<ul>
+<li>Selenium IDE: 一款Firefox插件，以图形化方式支持录制脚本、自动生成脚本等功能。用于本地开发和调试TC（Test Case）。</li>
+<li>Selenium WebDriver: 通过各浏览器厂商提供的原生Driver，指挥浏览器进行各类页面操作。<br><img src="/images/selenium-webdriver.png" alt=""><br><a href="https://www.slideshare.net/sethmcl/join-the-darkside-nightwatchjs" target="_blank" rel="external">图片出处：Join the darkside: Selenium testing with Nightwatch.js</a></li>
+<li>Selenium RC（已废弃）: 通过植入统一的JS脚本，指挥浏览器进行各类页面操作。兼容性比较差，2.0以后已废弃。</li>
+<li>Selenium Grid: 适用于分布式环境下运行大量的TC，Hub根据TC的环境要求分发给各个符合条件的Node执行。<br><img src="/images/selenium-grid.png" alt=""><br><a href="https://www.slideshare.net/sethmcl/join-the-darkside-nightwatchjs" target="_blank" rel="external">图片出处：Join the darkside: Selenium testing with Nightwatch.js</a><br><strong>特性</strong></li>
+<li>多浏览器支持：除了三大浏览器Firefox, Chrome, IE之外，还支持Android, iOS内置的浏览器。</li>
+<li>多平台支持：三大操作系统Linux, Mac, Windows上面都可以运行。</li>
+<li>多语言支持：可以用Python, Java, Node, Ruby等编写TC。</li>
+<li>录制脚本（仅限IDE）：记录Firefox上的各类页面操作，自动生成HTML格式的TC。</li>
+<li>自动生成脚本（仅限IDE）：将录制的HTML格式的TC转化成任意其他语言的TC。</li>
+<li>Headless：支持在命令行下，执行各类TC脚本。</li>
+<li>分布式支持：通过Selenium Grid将TC分发到各个节点执行。</li>
+</ul>
+<h5 id="入门：Selenium-IDE"><a href="#入门：Selenium-IDE" class="headerlink" title="入门：Selenium IDE"></a>入门：Selenium IDE</h5><p>首先安装Firefox，然后下载<a href="https://addons.mozilla.org/en-US/firefox/addon/selenium-ide/" target="_blank" rel="external">Selenium IDE</a>插件。通过Firefox的Tools-&gt;Selenium IDE菜单项可以启动Selenium IDE，操作界面如下：<br><img src="/images/selenium-ide.png" alt=""><br>使用Selenium IDE生成自动化测试脚本的一般步骤是：</p>
+<ul>
+<li>选择Action-&gt;Record菜单项或者点击右上角的小红点录制原始测试脚本</li>
+<li>以调试模式运行脚本-查看日志-修改脚本直至脚本可以稳定的运行</li>
+<li>保存测试脚本（仅限IDE运行）或者通过File-&gt;Export Test Suites As…菜单项导出其他语言的测试脚本（可在命令行下运行）<br>进一步信息可以参考<a href="http://www.seleniumhq.org/docs/02_selenium_ide.jsp" target="_blank" rel="external">官方文档</a>。</li>
+</ul>
+<h5 id="进阶：Selenium-WebDriver"><a href="#进阶：Selenium-WebDriver" class="headerlink" title="进阶：Selenium WebDriver"></a>进阶：Selenium WebDriver</h5><p>以Python3 + Firefox为例，</p>
+<ol>
+<li>命令行下运行<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install selenium==<span class="number">3.3</span><span class="number">.0</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>安装selenium<br>由于最新版的Selenium Python package<a href="https://github.com/SeleniumHQ/selenium/issues/3808">不支持Grid</a>，只能降级安装3.3.0版本</p>
+<ol>
+<li>下载<a href="https://github.com/mozilla/geckodriver/releases">Mozilla GeckoDriver</a>，解压然后添加到系统Path<br>准备就绪后，打开命令行，试着运行之前从Selenium IDE导出的Python测试脚本，也可以直接手写脚本。<br>示例脚本：<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line"><span class="keyword">from</span> selenium.webdriver.common.keys <span class="keyword">import</span> Keys</div><div class="line"><span class="keyword">from</span> selenium.webdriver.support.ui <span class="keyword">import</span> WebDriverWait</div><div class="line"><span class="keyword">from</span> selenium.webdriver.support <span class="keyword">import</span> expected_conditions <span class="keyword">as</span> EC</div><div class="line">browser = webdriver.Firefox()</div><div class="line">browser.get(<span class="string">'http://www.baidu.com/'</span>)</div><div class="line"><span class="keyword">assert</span> <span class="string">'百度一下，你就知道'</span> == browser.title</div><div class="line">kw = browser.find_element_by_id(<span class="string">"kw"</span>);</div><div class="line">kw.send_keys(<span class="string">'selenium'</span>)</div><div class="line">kw.send_keys(Keys.RETURN)</div><div class="line">WebDriverWait(browser, <span class="number">10</span>).until(EC.title_contains(<span class="string">'selenium_百度搜索'</span>))</div><div class="line"><span class="keyword">assert</span> browser.find_element_by_css_selector(<span class="string">"div.nums"</span>).is_displayed()</div><div class="line">print(<span class="string">"Test pass!"</span>)</div><div class="line">browser.quit()</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>进一步信息可以参考<a href="http://www.seleniumhq.org/docs/03_webdriver.jsp" target="_blank" rel="external">官方文档</a>和<a href="https://seleniumhq.github.io/selenium/docs/api/py/api.html" target="_blank" rel="external">Selenium Python API</a>。</p>
+<h5 id="高阶：Selenium-Grid"><a href="#高阶：Selenium-Grid" class="headerlink" title="高阶：Selenium Grid"></a>高阶：Selenium Grid</h5><p>前面提到，使用Selenium Grid可以轻松搭建一个分布式的自动化测试环境，特别适合运行大规模的测试用例和兼容性测试（各个节点运行不同的WebDriver）。<br>利用官方提供的<a href="https://hub.docker.com/u/selenium/" target="_blank" rel="external">Docker</a>镜像，可以在本地启动多个容器来搭建一个Selenium Grid环境，以2个运行<a href="http://phantomjs.org/" target="_blank" rel="external">phantomjs</a> WebDriver的节点的Grid为例：</p>
+<ul>
+<li>启动Hub: docker run -d -p 4444:4444 –name hub selenium/hub</li>
+<li>启动Node-1: docker run -d –link hub:hub –name pnode1 selenium/node-phantomjs</li>
+<li>启动Node-2: docker run -d –link hub:hub –name pnode2 selenium/node-phantomjs<br>等所有容器成功启动之后，打开浏览器访问http://<ip-of-local-docker-machine:4444>，就可以看到Selenium Grid的控制台了。<br><img src="/images/selenium-grid-demo.png" alt=""><br>然后修改测试脚本指向本地Selenium Grid的服务地址，就可以通过Selenium Grid运行测试了。<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">browser</span> = webdriver.Remote(</div><div class="line">	command_executor=<span class="string">"http://192.168.99.100:4444/wd/hub"</span>, </div><div class="line">	desired_capabilities=&#123;<span class="string">'browserName'</span>: <span class="string">'phantomjs'</span>&#125;)</div><div class="line">browser.implicitly_wait(30)</div></pre></td></tr></table></figure>
+</ip-of-local-docker-machine:4444></li>
+</ul>
+<p>进一步信息信息参考<a href="http://www.seleniumhq.org/docs/07_selenium_grid.jsp" target="_blank" rel="external">官方文档</a>和<a href="http://www.seleniumhq.org/docs/07_selenium_grid.jsp" target="_blank" rel="external">Wiki</a>。</p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>以上就是我对自动化测试的一些见解。<br>至此，有关QE所需掌握的3个基本测试技术的介绍就告一段落。无论是Mock，还是性能测试，自动化测试，本质上都只有一个目的，解放测试人员的生产力，让测试人员回归软件质量（Quality）本身。如果你想了解更多测试相关的技术，也欢迎到我的留言板留言，以后有机会我会再聊一些这方面的话题。感谢大家的关注。</p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="http://www.jianshu.com/p/ab31fef12f2f" target="_blank" rel="external">软件测试正交测试法</a><br><a href="https://www.slideshare.net/cuelogic/automation-testing-by-selenium-web-driver" target="_blank" rel="external">Automation Testing by Selenium Web Driver</a><br><a href="https://www.slideshare.net/tourdedave/selenium-tips-tricks" target="_blank" rel="external">Selenium Tips &amp; Tricks</a><br><a href="https://www.slideshare.net/tourdedave/selenium-tips-tricks" target="_blank" rel="external">Elemental Selenium Tips</a><br><a href="https://juejin.im/post/58ef6ab30ce463006b98f205" target="_blank" rel="external">腾讯云上 Selenium 用法示例</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzA5OTAyNzQ2OA%3D%3D&amp;ascene=0&amp;idx=1&amp;mid=2649693775&amp;mpshare=1&amp;nettype=WIFI&amp;pass_ticket=vadG8dJ4VDRY%2Fw2OgMlLPch1Nj6uN9CVB4qRTfudvz6y97RV%2BH%2FB0hjqhbGg3MiH&amp;sn=5b91936d398309b29ab5c0f6025d0b6c" target="_blank" rel="external">Docker环境下运行Python + Selenium + Chrome</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/开发测试/" rel="tag"># 开发测试</a>
+          
+            <a href="/tags/测试技术/" rel="tag"># 测试技术</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/13/转载-我的-10-年自学编程之路/" rel="prev" title="[转载]我的 10 年自学编程之路">
+                [转载]我的 10 年自学编程之路 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="goldmokey" />
+          <p class="site-author-name" itemprop="name">goldmokey</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习是一辈子的事情！</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前情概要："><span class="nav-number">1.</span> <span class="nav-text">前情概要：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#QE的成人礼：从功能测试到自动化测试"><span class="nav-number">2.</span> <span class="nav-text">QE的成人礼：从功能测试到自动化测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动化测试的利弊"><span class="nav-number">3.</span> <span class="nav-text">自动化测试的利弊</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#自动化测试的优势"><span class="nav-number">3.1.</span> <span class="nav-text">自动化测试的优势</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自动化测试的局限"><span class="nav-number">3.2.</span> <span class="nav-text">自动化测试的局限</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何进行Web自动化测试？"><span class="nav-number">4.</span> <span class="nav-text">如何进行Web自动化测试？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Selenium简介"><span class="nav-number">4.1.</span> <span class="nav-text">Selenium简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#入门：Selenium-IDE"><span class="nav-number">4.2.</span> <span class="nav-text">入门：Selenium IDE</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#进阶：Selenium-WebDriver"><span class="nav-number">4.3.</span> <span class="nav-text">进阶：Selenium WebDriver</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#高阶：Selenium-Grid"><span class="nav-number">4.4.</span> <span class="nav-text">高阶：Selenium Grid</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小结"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">goldmokey</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

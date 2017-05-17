@@ -253,6 +253,161 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://github.com/goldmokey/2017/05/17/面向开发的测试技术（三）：Web自动化测试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="goldmokey">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大道至简">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/17/面向开发的测试技术（三）：Web自动化测试/" itemprop="url">
+                  面向开发的测试技术（三）：Web自动化测试
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T09:33:18+08:00">
+                2017-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="前情概要："><a href="#前情概要：" class="headerlink" title="前情概要："></a>前情概要：</h4><ul>
+<li><a href="https://goldmokey.github.io/2017/05/10/%E9%9D%A2%E5%90%91%E5%BC%80%E5%8F%91%E7%9A%84%E6%B5%8B%E8%AF%95%E6%8A%80%E6%9C%AF%EF%BC%88%E4%B8%80%EF%BC%89/">面向开发的测试技术（一）：Mock</a></li>
+<li><a href="https://goldmokey.github.io/2017/05/11/%E9%9D%A2%E5%90%91%E5%BC%80%E5%8F%91%E7%9A%84%E6%B5%8B%E8%AF%95%E6%8A%80%E6%9C%AF%EF%BC%88%E4%BA%8C%EF%BC%89/">面向开发的测试技术（二）：性能测试</a></li>
+</ul>
+<h4 id="QE的成人礼：从功能测试到自动化测试"><a href="#QE的成人礼：从功能测试到自动化测试" class="headerlink" title="QE的成人礼：从功能测试到自动化测试"></a>QE的成人礼：从功能测试到自动化测试</h4><p>作为QE三部曲的最后一篇，这篇我们聊一下Web自动化测试。相比于前两篇Mock技术和性能测试，自动化测试可以说是最接近传统功能测试（也即手工测试）的一种测试技术，也可以说是区分QE和QA的分水岭。而Web自动化测试作为最常见的一类自动化测试，相关的资料和工具也是最丰富的。</p>
+<h4 id="自动化测试的利弊"><a href="#自动化测试的利弊" class="headerlink" title="自动化测试的利弊"></a>自动化测试的利弊</h4><p>在介绍具体的Web自动化测试技术之前，首先看一下自动化测试和功能测试的区别。在我看来，两者最大的区别在于测试人员身份的不同。在功能测试中，测试人员既要设计测试用例，又要运行手工测试，既是导演又是演员，既是教练又是球员。而在自动化测试中，演员和球员的角色都被机器所取代，测试人员只负责设计测试用例和编写自动化测试脚本。除此之外，相对于功能测试，自动化测试的不同还包括：</p>
+<h5 id="自动化测试的优势"><a href="#自动化测试的优势" class="headerlink" title="自动化测试的优势"></a>自动化测试的优势</h5><ul>
+<li>更快的测试速度，带来更高的测试效率。一般而言，运行一遍功能测试都要以小时为单位，有的甚至以天为单位。而自动化测试则一般都在分钟级别，如果运行在分布式环境下，甚至可以降到秒级。由此可见，通过自动化测试，测试人员可以省去大量的手工测试时间，从而有更多时间去熟悉业务和完善测试用例，在提高自身测试效率的同时，也有助于提升整体的软件质量。</li>
+<li>提高测试覆盖率。要理解这一点，首先要从<a href="http://www.jianshu.com/p/ab31fef12f2f">正交测试</a>法说起。假设一个测试场景涉及3个测试因素，每个测试因素有3种可能的取值（水平），那么根据正交测试法，总共需要设计8个（因素数*(最大水平数-1)+1）测试用例。测试场景越复杂，所需的测试用例越多。当测试场景的复杂度超过一定程度后，纯手工的功能测试显然就无力覆盖所有的测试用例了，并且随着复杂度的升高，测试覆盖率会越来越低。然而，借助自动化测试脚本，无论测试场景多复杂，都能保证一定的测试覆盖率。</li>
+<li>更好的稳定性和可扩展性。功能测试靠人，自动化测试靠机器，因此，无论是运行测试的稳定性，还是测试能力的可扩展性（比如从测试1个应用变为测试10个应用），自动化测试都远超功能测试。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/17/面向开发的测试技术（三）：Web自动化测试/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://github.com/goldmokey/2017/05/13/转载-我的-10-年自学编程之路/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1461,140 +1616,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://github.com/goldmokey/2017/04/30/Githug小游戏玩转git/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="goldmokey">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大道至简">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/30/Githug小游戏玩转git/" itemprop="url">
-                  Githug小游戏玩转git
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-30T09:27:03+08:00">
-                2017-04-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Githug"><a href="#Githug" class="headerlink" title="Githug"></a>Githug</h3><p>一个命令行的git闯关小游戏。把平常操作过程中遇到的一些场景都进行分解案例化，变成了一个个关卡。目前总计55关，有趣又好玩的git。</p>
-<h4 id="项目传送门"><a href="#项目传送门" class="headerlink" title="项目传送门"></a><a href="https://github.com/Gazler/githug">项目传送门</a></h4><h3 id="1-Install"><a href="#1-Install" class="headerlink" title="1 Install"></a>1 Install</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gem <span class="keyword">install</span> githug</div></pre></td></tr></table></figure>
-<p>当然安装过程可能没这么顺利。  <a href="http://blog.csdn.net/ddn003/article/details/20706091" target="_blank" rel="external">爬坑专用 1</a>  <a href="https://segmentfault.com/a/1190000004222489" target="_blank" rel="external">爬坑专用2</a></p>
-<h3 id="2-Githug-Help"><a href="#2-Githug-Help" class="headerlink" title="2 Githug Help"></a>2 Githug Help</h3><p>开始游戏之前，不了解规则怎么战胜boss。最有用的命令之一</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">githug <span class="built_in">help</span></div></pre></td></tr></table></figure>
-<p>，会指引你前进的道路。</p>
-<ul>
-<li>githug help [TASK] 帮助</li>
-<li>githug hint 指点</li>
-<li>githug levels 展示</li>
-<li>githug play 初始化</li>
-<li>githug reset 重启关卡</li>
-<li>githug test 测试<h3 id="3-Start-Game"><a href="#3-Start-Game" class="headerlink" title="3 Start Game"></a>3 Start Game</h3></li>
-</ul>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">githug</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1644,7 +1665,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
