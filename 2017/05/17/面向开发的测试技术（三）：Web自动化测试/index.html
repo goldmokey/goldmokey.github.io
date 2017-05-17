@@ -103,7 +103,7 @@
 <meta property="og:image" content="https://github.com/images/selenium-grid.png">
 <meta property="og:image" content="https://github.com/images/selenium-ide.png">
 <meta property="og:image" content="https://github.com/images/selenium-grid-demo.png">
-<meta property="og:updated_time" content="2017-05-17T01:59:39.970Z">
+<meta property="og:updated_time" content="2017-05-17T02:10:18.315Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面向开发的测试技术（三）：Web自动化测试">
 <meta name="twitter:description" content="前情概要： 面向开发的测试技术（一）：Mock 面向开发的测试技术（二）：性能测试  QE的成人礼：从功能测试到自动化测试作为QE三部曲的最后一篇，这篇我们聊一下Web自动化测试。相比于前两篇Mock技术和性能测试，自动化测试可以说是最接近传统功能测试（也即手工测试）的一种测试技术，也可以说是区分QE和QA的分水岭。而Web自动化测试作为最常见的一类自动化测试，相关的资料和工具也是最丰富的。 自动">
@@ -402,11 +402,10 @@
 </ul>
 <h5 id="进阶：Selenium-WebDriver"><a href="#进阶：Selenium-WebDriver" class="headerlink" title="进阶：Selenium WebDriver"></a>进阶：Selenium WebDriver</h5><p>以Python3 + Firefox为例，</p>
 <ol>
-<li>命令行下运行<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install selenium==<span class="number">3.3</span><span class="number">.0</span></div></pre></td></tr></table></figure>
+<li>命令行下运行 <em>pip install selenium==3.3.0</em> 安装selenium<ul>
+<li>由于最新版的Selenium Python package<a href="https://github.com/SeleniumHQ/selenium/issues/3808">不支持Grid</a>，只能降级安装3.3.0版本</li>
+</ul>
 </li>
-</ol>
-<p>安装selenium<br>由于最新版的Selenium Python package<a href="https://github.com/SeleniumHQ/selenium/issues/3808">不支持Grid</a>，只能降级安装3.3.0版本</p>
-<ol>
 <li>下载<a href="https://github.com/mozilla/geckodriver/releases">Mozilla GeckoDriver</a>，解压然后添加到系统Path<br>准备就绪后，打开命令行，试着运行之前从Selenium IDE导出的Python测试脚本，也可以直接手写脚本。<br>示例脚本：<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line"><span class="keyword">from</span> selenium.webdriver.common.keys <span class="keyword">import</span> Keys</div><div class="line"><span class="keyword">from</span> selenium.webdriver.support.ui <span class="keyword">import</span> WebDriverWait</div><div class="line"><span class="keyword">from</span> selenium.webdriver.support <span class="keyword">import</span> expected_conditions <span class="keyword">as</span> EC</div><div class="line">browser = webdriver.Firefox()</div><div class="line">browser.get(<span class="string">'http://www.baidu.com/'</span>)</div><div class="line"><span class="keyword">assert</span> <span class="string">'百度一下，你就知道'</span> == browser.title</div><div class="line">kw = browser.find_element_by_id(<span class="string">"kw"</span>);</div><div class="line">kw.send_keys(<span class="string">'selenium'</span>)</div><div class="line">kw.send_keys(Keys.RETURN)</div><div class="line">WebDriverWait(browser, <span class="number">10</span>).until(EC.title_contains(<span class="string">'selenium_百度搜索'</span>))</div><div class="line"><span class="keyword">assert</span> browser.find_element_by_css_selector(<span class="string">"div.nums"</span>).is_displayed()</div><div class="line">print(<span class="string">"Test pass!"</span>)</div><div class="line">browser.quit()</div></pre></td></tr></table></figure>
 </li>
 </ol>
